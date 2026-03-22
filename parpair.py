@@ -1,10 +1,5 @@
-from enum import Enum
 import numpy as np
-from generation import generer_approbation_profil, generer_ordre_profil
-
-class TypeDeVote(Enum):
-    APPROBATION = 0
-    ORDRE_TOTAUX = 1
+from generation import generer_profil, TypeDeVote
 
 def nbr_votantes_pref(profil, k, l, type_de_vote):
     """Étant donné un profil et deux candidates d'indice k et l, cette méthode 
@@ -31,12 +26,13 @@ def diff_absolue(profil, k, l, type_de_vote):
 
 def ensemble_des_diff_absolue(profil, type_de_vote):
     n, m = profil.shape
-    d_valeurs = []
+    d_valeurs = np.zeros((m,m))
     for k in range(m):
         for l in range(k+1, m):
             d = diff_absolue(profil, k, l, type_de_vote)
-            d_valeurs.append(d)
-    return np.array(d_valeurs)
+            d_valeurs[k][l] = d
+            d_valeurs[l][k] = d
+    return d_valeurs
 
 
 def ensemble_des_diff_absolue_approbation(profil):
@@ -48,13 +44,18 @@ def ensemble_des_diff_absolue_ordre_totaux(profil):
 
 
 #Exemple : 
-if __name__ == "__main__":git branch
-    p = generer_approbation_profil(n=10, m=5, polarisation=1.0)
-    print(ensemble_des_diff_absolue_approbation(p))
+if __name__ == "__main__":
+    print("Profils polarisés :")
+    for type_de_vote in TypeDeVote:
+        print(f"Type de vote: {type_de_vote.name}")
+        p = generer_profil(n=10, m=5, polarisation=1.0, type_de_vote=type_de_vote)
+        print(ensemble_des_diff_absolue(p, type_de_vote))
 
         
 #Exemple : 
 if __name__ == "__main__":
-    p = generer_ordre_profil(n=10, m=5, polarisation=1.0)
-    print(ensemble_des_diff_absolue_ordre_totaux(p))
-            
+    print("Profils non polarisés :")
+    for type_de_vote in TypeDeVote:
+        print(f"Type de vote: {type_de_vote.name}")
+        p = generer_profil(n=10, m=5, polarisation=0.0, type_de_vote=type_de_vote)
+        print(ensemble_des_diff_absolue(p, type_de_vote))

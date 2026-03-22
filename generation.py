@@ -1,4 +1,10 @@
+from enum import Enum
 import numpy as np
+
+
+class TypeDeVote(Enum):
+    APPROBATION = 0
+    ORDRE_TOTAUX = 1
 
 # Q1 : Générer aléatoirement un profil dans A^n : 
 def generer_approbation_profil(n, m, polarisation = 0.0, bruit = 0.05): # n = nombre de votantes, m = nombre de candidates
@@ -77,3 +83,11 @@ if __name__ == "__main__":
     p = generer_ordre_profil(n=10, m=5, polarisation=1.0, bruit=0)
     print("Profil très polarisé")
     print(p)
+
+
+def generer_profil(type_de_vote, n, m, polarisation, bruit=0.0):
+    match type_de_vote:
+        case TypeDeVote.APPROBATION:
+            return generer_approbation_profil(n, m, polarisation, bruit)
+        case TypeDeVote.ORDRE_TOTAUX:
+            return generer_ordre_profil(n, m, polarisation, bruit)
