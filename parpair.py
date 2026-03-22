@@ -1,52 +1,60 @@
+from enum import Enum
 import numpy as np
 from generation import generer_approbation_profil, generer_ordre_profil
 
+class TypeDeVote(Enum):
+    APPROBATION = 0
+    ORDRE_TOTAUX = 1
 
-#Calcul de la distance d'approbation :
-def calcul_approbation(profil):
-    n, m =profil.shape
-    d_valeurs = []
-
-    for k in range(m):
-        for l in range(k+1, m):
-            n_kl = np.sum((profil[:,k] == 1) & (profil[:,l] == 0))
-            n_lk = np.sum((profil[:,l] == 1) & (profil[:,k] == 0))
-
-            d = abs(n_kl - n_lk)
-
-            d_valeurs.append(d)
-    return np.array(d_valeurs)
-
-#Exemple : 
-if __name__ == "__main__":
-    p = generer_approbation_profil(10, 5, polarisation = 0.5)
-    print(calcul_approbation(p))
-
-#Calcul de la distance d'ordre :
-def calcul_ordre(profil):
-    n, m = profil.shape
-    d_valeurs = []
-
-    for k in range(m):
-        for l in range(k+1, m):
-
+def nbr_votantes_pref(profil, k, l, type_de_vote):
+    """Étant donné un profil et deux candidates d'indice k et l, cette méthode 
+    retourne de nombre de votantes qui préfèrent ck à cl, étant donné le type de vote.
+    """
+    match type_de_vote:
+        case TypeDeVote.APPROBATION:
+            return np.sum((profil[:,k] == 1) & (profil[:,l] == 0))
+        case TypeDeVote.ORDRE_TOTAUX:
             n_kl = 0
-            n_lk = 0
-
             for vote in profil:
                 position_k = np.where(vote == k)[0][0]
                 position_l = np.where(vote == l)[0][0]
-
                 if position_k < position_l:
                     n_kl += 1
-                else:
-                    n_lk += 1
-            d = abs(n_kl - n_lk)
+            return n_kl
+
+
+def diff_absolue(profil, k, l, type_de_vote):
+    n_kl = nbr_votantes_pref(profil, k, l, type_de_vote)
+    n_lk = nbr_votantes_pref(profil, l, k, type_de_vote)
+    return abs(n_kl - n_lk)
+
+
+def ensemble_des_diff_absolue(profil, type_de_vote):
+    n, m = profil.shape
+    d_valeurs = []
+    for k in range(m):
+        for l in range(k+1, m):
+            d = diff_absolue(profil, k, l, type_de_vote)
             d_valeurs.append(d)
     return np.array(d_valeurs)
+
+
+def ensemble_des_diff_absolue_approbation(profil):
+    return ensemble_des_diff_absolue(profil, TypeDeVote.APPROBATION)
+
+
+def ensemble_des_diff_absolue_ordre_totaux(profil):
+        return ensemble_des_diff_absolue(profil, TypeDeVote.ORDRE_TOTAUX)
+
+
+#Exemple : 
+if __name__ == "__main__":
+    p = generer_approbation_profil(n=10, m=5, polarisation=1.0)
+    print(ensemble_des_diff_absolue_approbation(p))
+
         
 #Exemple : 
 if __name__ == "__main__":
-    p = generer_ordre_profil(10, 5, polarisation = 0.5)
-    print(calcul_ordre(p))
+    p = generer_ordre_profil(n=10, m=5, polarisation=1.0)
+    print(ensemble_des_diff_absolue_ordre_totaux(p))
             
