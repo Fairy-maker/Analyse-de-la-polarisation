@@ -48,7 +48,7 @@ def ensemble_des_diff_absolue_ordre_totaux(profil):
 
 
 #Exemple : 
-if __name__ == "__main__":
+if __name__ == "__main__":git branch
     p = generer_approbation_profil(n=10, m=5, polarisation=1.0)
     print(ensemble_des_diff_absolue_approbation(p))
 
