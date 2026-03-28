@@ -27,11 +27,11 @@ Il est important de noter que les questions non présente dans le fichier projet
  `cd Analyse-de-la-polarisation`
 
  ## Lancement du projet 
-  ### Convertir le notebool Jupyter (.ipynb) en fichier python(.py) : 
+  ### Convertir le notebook Jupyter (.ipynb) en fichier python(.py) : 
   - Depuis le terminal, vous devez convertir le notebook Jupyter en fichier python exécutable grâce à la commande :
     `python3 -m nbconvert --to script projet.ipynb`
-  ### Éxécuter le fichier python :
-  - Pour éxécuter le fichier ipynb maintenant transformé en fichier python, vous devez entrer la commande :
+  ### Exécuter le fichier python :
+  - Pour exécuter le fichier ipynb maintenant transformé en fichier python, vous devez entrer la commande :
     `python3 projet.py`
 
 **Auteur :** BAIGNERES Clara, BENAMEUR Féryel, BOUCHERON Lucie 
