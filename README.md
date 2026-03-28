@@ -20,6 +20,11 @@ Il est important de noter que les questions non présente dans le fichier projet
 - VS Code (si possible)
 - Jupyter Notebook
 
+## Installation Jupyter depuis le terminal : 
+- Pour pouvoir exécuter notre projet, vous devez tout d'abord installer jupyter sur votre ordinateur depuis votre terminal. Pour cela, vous devez exécuter les commandes suivantes :
+   `pip3 install notebook`
+
+  `pip3 install jupyterlab`
 ## Installation 
 ### Cloner le repo
  `git clone <repo-url>`
