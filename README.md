@@ -13,7 +13,7 @@ projet
 ├── question 14/
 └── question 15/
 ```
-Il est important de noter que les questions non présente dans le fichier projet.ipynb sont des questions de rédaction mise dans notre rapport. 
+Il est important de noter que les questions non présente dans le fichier projet.ipynb sont des questions de rédaction mises dans notre rapport. 
 
 ## Prérequis 
 - Java Python 3 ou version compatible avec le projet
@@ -22,6 +22,7 @@ Il est important de noter que les questions non présente dans le fichier projet
 
 ## Installation Jupyter depuis le terminal : 
 - Pour pouvoir exécuter notre projet, vous devez tout d'abord installer jupyter sur votre ordinateur depuis votre terminal. Pour cela, vous devez exécuter les commandes suivantes :
+  
    `pip3 install notebook`
 
   `pip3 install jupyterlab`
