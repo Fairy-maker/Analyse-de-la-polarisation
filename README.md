@@ -1,5 +1,5 @@
 # Analyse-de-la-polarisation
-Ce projet avait pour objectif d’étudier la polarisation des préférences exprimées lors de processus électoraux. Nous avions un ensemble de votantes et de candidates et différents processus de votes. Une élection était polarisée lorsque l’électorat pouvait être divisé en deux clusters de votantes distincts. Pour cela différentes techniques de distance et de clusterisation ont été utilisées dans notre projet tels que les distances de Hamming, de Spearman ou encore la clusterisation K-Means.
+<p style="text-align:justify;"> projet avait pour objectif d’étudier la polarisation des préférences exprimées lors de processus électoraux. Nous avions un ensemble de votantes et de candidates et différents processus de votes. Une élection était polarisée lorsque l’électorat pouvait être divisé en deux clusters de votantes distincts. Pour cela différentes techniques de distance et de clusterisation ont été utilisées dans notre projet tels que les distances de Hamming, de Spearman ou encore la clusterisation K-Means.</p>
 ## Structure du projet 
 ```
 projet
