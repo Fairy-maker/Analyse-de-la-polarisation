@@ -56,7 +56,7 @@ Enfin, dans un dernier temps, BAIGNÈRES Clara s’est occupée des questions 11
 
 Notre génération de profils pour un vote par approbation repose sur la polarisation choisie en argument de notre fonction. 
 
-De manière concise, plus la polarisation est grande, plus les chances d'attribuer à la votante le bulletin $a$ s'affaiblit, et ce, jusqu'à ce que la polarisation atteigne 1. On a alors autant de changer d'attribuer le bulletin $a$ que le bulletin $\bar{a}$. 
+De manière concise, plus la polarisation est grande, plus les chances d'attribuer à la votante le bulletin $a$ s'affaiblit, et ce, jusqu'à ce que la polarisation atteigne 1. On a alors autant de chance de changer d'attribuer le bulletin $a$ que le bulletin $\bar{a}$. 
 
 On a alors bien l'idée que plus la polarisation est faible, plus les bulletins seront similaires, et plus la polarisation est grande, plus les bulletins peuvent se répartir en deux groupes égaux. 
 
@@ -64,7 +64,7 @@ Le bruit sert à ajouter quelques modifications aux votes.
 
 \subsection{Question 2}
 
-Pour les votes par ordres totaux, le principe est le même. la modification par le bruit consiste à interchanger deux candidats dans le vote. 
+Pour les votes par ordres totaux, le principe est le même. La modification par le bruit consiste à interchanger deux candidats dans le vote. 
  
 \subsection{Question 4}
  
@@ -154,7 +154,7 @@ On remarque que, pour le vote par approbation comme pour le vote par ordre total
 
 \paragraph{Pour la distance de Hamming}
 
-\subsubsection{Axiome 1 : positivité}
+\subsubsection{Propriété 1 : positivité}
 
 Comme 
 \[
@@ -162,11 +162,12 @@ d_H(a_{v_k}, a_{v_l}) = \sum_{i=1}^n \mathbb{1}_{a_{v_k}[i] \neq a_{v_l}[i]},
 \]
 il apparaît que, par l’indicatrice, on a soit $1$ soit $0$ dans notre somme.  
 D’où $d_H(a_{v_k},a_{v_l}) \geq 0$.
+\\
 
-Donc le premier axiome est vérifié.
+Donc la première propriété est vérifiée.
 
 
-\subsubsection{Axiome 2 : séparation}
+\subsubsection{Propriété 2 : séparation}
 
 \[
 d(a_{v_k}, a_{v_l}) = 0 
@@ -179,10 +180,10 @@ a_{v_k}[i] = a_{v_l}[i],
 ~~\forall i \in [\![1, \ldots, m]\!].
 \]
 
-Donc le second axiome est vérifié.
+Donc la seconde propriété est vérifiée.
 
 
-\subsubsection{Axiome 3 : symétrie}
+\subsubsection{Propriété 3 : symétrie}
 
 Pour tout $a_{v_k}, a_{v_l} \in \mathcal{A}$, on a :
 \[
@@ -192,10 +193,12 @@ d_H(a_{v_k}, a_{v_l}) = d_H(a_{v_l}, a_{v_k})
 \sum_{i=1}^m \mathbb{1}_{a_{v_l}[i] \neq a_{v_k}[i]}.
 \]
 
-Cela est vrai car l’inégalité est commutative.
+Cela est vrai car l’inégalité ainsi que la somme sont commutatives donc changer l'ordre des termes n'impacte pas l'opération.
+\\
 
+Donc la troisième propriété est vérifiée. 
 
-\subsubsection{Axiome 4 : inégalité triangulaire}
+\subsubsection{Propriété 4 : inégalité triangulaire}
 
 Soient trois bulletins $a = a_{v_k}$, $b = a_{v_l}$ et $c = a_{v_z}$ dans $\mathcal{A}$.
 
@@ -240,18 +243,18 @@ En sommant sur toutes les coordonnées $i \in \{1,\ldots,m\}$, on obtient :
 \big).
 \]
 
-C’est‑à‑dire :
+Par la linéarité de la somme on a donc :
 \[
 d_H(a,c) \le d_H(a,b) + d_H(b,c).
 \]
 \\
 
-L’axiome 4 (inégalité triangulaire) est donc vérifié pour la distance de Hamming.
+La quatrième propriété est donc vérifiée.
 
 
 \paragraph{Pour la distance de Spearman}
 
-\subsubsection{Axiome 1 : positivité}
+\subsubsection{Propriété 1 : positivité}
 
 Soient $a = \preceq_{v_k}$, $b = \preceq_{v_l}$, avec $a,b \in \mathcal{L}$.
 
@@ -259,12 +262,13 @@ Soient $a = \preceq_{v_k}$, $b = \preceq_{v_l}$, avec $a,b \in \mathcal{L}$.
 d_S(a,b) = \sum_{i=1}^m |r_a(i) - r_b(i)|
 \]
 avec $r_a(i)$ le rang de la candidate $i$ dans le vote de la votante $a$.  
-Ce résultat est donc toujours positif grâce à la valeur absolue.
+Ce résultat est donc toujours positif par définition de la valeur absolue.
+\\
 
-Donc le premier axiome est vérifié.
+Donc la première propriété est vérifiée.
 
 
-\subsubsection{Axiome 2 : séparation}
+\subsubsection{Propriété 2 : séparation}
 
 \[
 (\Rightarrow) \quad 
@@ -278,11 +282,12 @@ r_a(i) = r_b(i) \Rightarrow |r_a(i) - r_b(i)| = 0.
 \]
 
 D’où $d(a,b) = 0$.
+\\
 
-Donc le second axiome est vérifié.
+Donc la seconde propriété est vérifiée.
 
 
-\subsubsection{Axiome 3 : symétrie}
+\subsubsection{Propriété 3 : symétrie}
 
 Pour tout $a,b \in \mathcal{L}$ :
 \[
@@ -296,18 +301,19 @@ d(a,b) = d(b,a) \Leftrightarrow
 |r_a(i) - r_b(i)| = |r_b(i) - r_a(i)|,
 \]
 ce qui est vrai par la propriété de la valeur absolue.
+\\
 
-Donc le troisième axiome est vérifié.
+Donc la troisième propriété est vérifiée.
 
 
-\subsubsection{Axiome 4 : inégalité triangulaire}
+\subsubsection{Propriété 4 : inégalité triangulaire}
 
 \begin{align*}
 d_S(a,b) 
 &= \sum_{i=1}^m |r_a(i) - r_b(i)| \\
 &= \sum_{i=1}^m |r_a(i) - r_c(i) + r_c(i) - r_b(i)| \\
-&\leq \sum_{i=1}^m \big(|r_a(i) - r_c(i)| + |r_c(i) - r_b(i)|\big) \\
-&= \sum_{i=1}^m |r_a(i) - r_c(i)| + \sum_{i=1}^m |r_c(i) - r_b(i)| \\
+&\leq \sum_{i=1}^m \big(|r_a(i) - r_c(i)| + |r_c(i) - r_b(i)|\big) \text{ par l'inégalité triangulaire de la valeur obsolue}\\
+&= \sum_{i=1}^m |r_a(i) - r_c(i)| + \sum_{i=1}^m |r_c(i) - r_b(i)| \text{ par linéarité de la somme} \\
 &= d_S(a,c) + d_S(c,b)
 \end{align*}
 
@@ -315,8 +321,10 @@ On a donc bien que :
 \[
 d_S(a,b) \leq d_S(a,c) + d_S(c,b).
 \]
+\\
 
-Donc le quatrième axiome est bien vérifié.
+
+Donc la quatrième proposition est vérifiée.
 
 
 \subsection{Question 9}
@@ -373,7 +381,7 @@ Or, par définition :
 u_1^*(p) = \min_{a \in \mathcal{A}} \sum_{a' \in p} d_H(a, a')
 \quad \text{et} \quad
 u_2^*(p) = \min_{a_1, a_2 \in \mathcal{A}} 
-\sum_{a' \in p} \min \{ d_H(a_1, a'), d_H(a_2, a') \}.
+\sum_{a' \in p} \{ d_H(a_1, a'), d_H(a_2, a') \}.
 \]
 
 On constate toujours que $u_2^*(p) \le u_1^*(p)$, car avec deux centres de cluster on peut toujours choisir $a_1=a_2$ et retrouver la même valeur que pour $u_1^*(p)$.  
@@ -471,7 +479,7 @@ De plus, puisque $u_1^*(p) \leq \frac{n m}{2}$, le consensus apparaît à distan
 
 Ainsi, puisque l’on ne peut avoir que $a_1$ ou $a_2$ comme vote, et que $a_2 = \bar{a_1}$, on a bien :
 \[
-\varphi_{d_H}(p) = 1 \Leftrightarrow p = p_{a, \bar{a}}.
+\varphi_{d_H}(p) = 1 \Rightarrow p = p_{a, \bar{a}}.
 \]
 
 Enfin, la valeur maximale $\frac{nm}{2}$ minimise notre distance entre $a$ et $\bar{a}$, et donc :
@@ -481,10 +489,14 @@ Enfin, la valeur maximale $\frac{nm}{2}$ minimise notre distance entre $a$ et $\
 0 \leq \varphi_{d_H}(p) \leq 1
 \]
 puisque $d_H$ est une fonction de distance positive.
+\\
 
 Donc le premier axiome est vérifié.
 
 \subsubsection{Axiome 2 : neutralité}
+
+Pour que $phi_{d_H}(p) = \phi_{d_H}(p^\pi)$ il faut que $u_1^*(p) = u_1^*(p^\pi)$ et $u_2^*(p) = u_2^*(p^\pi)$. Montrons alors c'est deux égalités.
+\\
 
 \begin{itemize}
   \item $u_1^*(p) = u_1^*(p^\pi)$
@@ -558,6 +570,7 @@ Comme on a montré que $u_1^*(p) = u_1^*(p^\pi)$ et $u_2^*(p) = u_2^*(p^\pi)$, o
 \quad \Rightarrow \quad
 \varphi_{d_H}(p) = \varphi_{d_H}(p^\pi).
 \]
+\\
 
 Donc le second axiome est vérifié.
 
@@ -599,6 +612,7 @@ Ainsi :
 \Rightarrow
 \varphi_{d_H}(p) = \varphi_{d_H}({}^{\sigma}p).
 \]
+\\
 
 Donc le troisième axiome est vérifié.
 
@@ -628,6 +642,10 @@ Ainsi :
 = \frac{2}{n m}(u_1^*(p) - u_2^*(p))
 = \varphi_{d_H}(p).
 \]
+\\
+
+Note : On a bien $(kn)m$ au dénominateur de notre première égalité car on a on a $kn$ votes, grâce à la $k$-répétition de notre profil à $n$ votes.
+\\
 
 Donc le quatrième axiome est vérifié.
 
