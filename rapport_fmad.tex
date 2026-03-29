@@ -10,7 +10,7 @@
 \usepackage{enumitem}
 \usepackage{array}
 \usepackage{bbold}
-
+\usepackage{hyperref}
 
 
 
@@ -301,6 +301,9 @@ d(a,b) = d(b,a) \Leftrightarrow
 |r_a(i) - r_b(i)| = |r_b(i) - r_a(i)|,
 \]
 ce qui est vrai par la propriété de la valeur absolue.
+\\
+
+Exemple : si pour le vote $a \in p$, $c_i$ est en position 3, et que pour $b$ elle est en position 2, alors la distance est de 1 $(d(a,b))$. Pour $d(b,a)$ on obtient :  $|r_b(i) - r_a(i)| = |2-3| = |-1| = 1 = d(a,b)$
 \\
 
 Donc la troisième propriété est vérifiée.
@@ -778,10 +781,14 @@ Est-ce qu’il existe une écriture plus compacte, plus computationnelle qui per
 
 \textbf{Critique :} cela m'a été grandement utile, j'ai économisé beaucoup de temps simplement pour la mise en page.
 
+\section{Sources}
 
 
-
-
+\begin{itemize}
+	\item \underline{\href{http://pingouindesalpes.com/hugo/post/markdown/}{Notation markdown pour le ReadMe}.}
+	\item \underline{\href{https://share.miple.co/content/6IggazU5m0tIG
+}{Démonstration de l’inégalité triangulaire pour la valeur absolue}.}
+\end{itemize}
 
 
 
