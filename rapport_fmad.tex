@@ -152,7 +152,7 @@ Pour ne pas déterminer la représentation graphique seulement à partir d'un pr
 
 On remarque que, pour le vote par approbation comme pour le vote par ordre total, la fonction $\varphi^2$ se rapproche fortement d'une fonction linéaire $y=x$ ce qui est logique puisque $\varphi^2$ est sensé représenter notre polarisation. 
 
-\subsection{Question 7 (Pour la distance de Hamming)}
+\subsection{Question 7 (pour la distance de Hamming)}
 
 \subsubsection{Propriété 1 : positivité}
 
@@ -247,7 +247,7 @@ d_H(a,c) \le d_H(a,b) + d_H(b,c).
 La quatrième propriété est donc vérifiée.
 
 
-\paragraph{Pour la distance de Spearman}
+\subsection{Question 7 (pour la distance de Spearman)}
 
 \subsubsection{Propriété 1 : positivité}
 
@@ -302,7 +302,7 @@ Donc la troisième propriété est vérifiée.
 d_S(a,b) 
 &= \sum_{i=1}^m |r_a(i) - r_b(i)| \\
 &= \sum_{i=1}^m |r_a(i) - r_c(i) + r_c(i) - r_b(i)| \\
-&\leq \sum_{i=1}^m \left(|r_a(i) - r_c(i)| + |r_c(i) - r_b(i)|\right) \text{ par l'inégalité triangulaire de la valeur obsolue}\\
+&\leq \sum_{i=1}^m \left(|r_a(i) - r_c(i)| + |r_c(i) - r_b(i)|\right) \text{ par l'inégalité triangulaire de la valeur absolue}\\
 &= \sum_{i=1}^m |r_a(i) - r_c(i)| + \sum_{i=1}^m |r_c(i) - r_b(i)| \text{ par linéarité de la somme} \\
 &= d_S(a,c) + d_S(c,b)
 \end{align*}
