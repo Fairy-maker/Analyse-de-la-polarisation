@@ -11,6 +11,7 @@
 \usepackage{array}
 \usepackage{bbold}
 \usepackage{hyperref}
+\usepackage[T1]{fontenc}
 
 
 
@@ -35,20 +36,19 @@
 
 \section{Introduction}
 
-Dans le cadre de notre cours “Fondements mathématiques pour l’aide à la décision”, nous devions réaliser un projet qui avait pour objectif d’étudier la polarisation des préférences exprimées lors de processus électoraux. 
+Dans le cadre de notre cours « Fondements mathématiques pour l’aide à la décision », nous devons réaliser un projet qui a pour objectif d’étudier la polarisation des préférences exprimées lors de processus électoraux. 
 
-Nous avions un ensemble de votantes et de candidates et différents processus de votes. Une élection était polarisée lorsque l’électorat pouvait être divisé en deux clusters de votantes distincts. Pour cela différentes techniques de distance et de clusterisation ont été utilisées dans notre projet tels que les distances de Hamming, de Spearman ou encore la clusterisation K-Means. L’ensemble du code Python a été réalisé sous VS Code grâce à un notebook Jupyter. Le travail de groupe a pu être effectué via GitHub et l’utilisation de git grâce à un système de branches.
+Nous avons un ensemble de votantes et de candidates, ainsi que différents processus de votes. Une élection est polarisée lorsque l’électorat peut être divisé en deux clusters de votantes distincts. Pour cela, différentes techniques de distance et de clusterisation sont utilisées dans notre projet, telles que les distances de Hamming et de Spearman, ainsi que la clusterisation K-Means. L’ensemble du code Python a été réalisé sous VS Code grâce à un notebook Jupyter. Le travail de groupe a pu être effectué via GitHub et l’utilisation de git grâce à un système de branches.
 
 \section{Répartition du travail}
 
 Ce travail qui avait pour vocation de comprendre la polarisation des préférences exprimées lors de processus électoraux à été réalisé en plusieurs étapes. 
 
-Dans un premier temps, BOUCHERON Lucie a résolu les questions 1 à 6 comprises. Elle a pu créer les méthodes principales pour créer nos profils, nos types de votes (par approbation ou par ordre totaux) et générer les profils en fonction du type de vote donné. Elle a aussi pu nous éclairer sur les calculs des axiomes et leur compréhension pour le projet.
+Dans un premier temps, Lucie Boucheron a résolu les questions 1 à 6 (incluses). Elle a pu créer les méthodes principales pour générer des profils aléatoires (en contrôlant la polarisation de l'échantillon généré), nos types de votes (par approbation ou par ordre totaux) et générer les profils en fonction du type de vote donné. Elle a aussi pu nous éclairer sur les calculs des axiomes et leur compréhension pour le projet.
 
-Parallèlement, BENAMEUR Féryel s’est occupée des questions 7 à 10. L’objectif était de comprendre les principes des fonctions de distances de Hamming et de Spearman de façon mathématiques en s’aidant notamment des axiomes vérifiés par Lucie. Dans un second temps, il était question d’implémenter sous Python les formules données par ces fonctions de distance.
+Parallèlement, Féryel Benameur s’est occupée des questions 7 à 10. L’objectif était de comprendre les principes des fonctions de distances de Hamming et de Spearman de façon mathématiques en s’aidant notamment des axiomes vérifiés par Lucie. Dans un second temps, il était question d’implémenter en Python les formules données par ces fonctions de distance.
 
-Enfin, dans un dernier temps, BAIGNÈRES Clara s’est occupée des questions 11 à 13 comprises. Elle a pu implémenter les méthodes pour calculer $u_1^*$ et $u_2^*$ en fonction du type de vote donné. Elle s’est aussi occupée de l’implémentation de l’algorithme des K-Means avec $k=2$ dans le cas de vote par approbation. Ces méthodes et calculs ont été d’une grande importance et ont pu être réutilisés en appelant simplement les fonctions pour les questions 14 et 15 réalisées par Féryel. 
-
+Enfin, dans un dernier temps, Clara Baignères s’est occupée des questions 11 à 13 comprises. Elle a pu implémenter les méthodes pour calculer $u_1^*$ et $u_2^*$ en fonction du type de vote donné. Elle s’est aussi occupée de l’implémentation de l’algorithme des K-Means avec $k=2$ dans le cas de vote par approbation. Ces méthodes et calculs ont été d’une grande importance et ont pu être réutilisés en appelant simplement les fonctions pour les questions 14 et 15 réalisées par Féryel. Clara s'est également chargée de la mise en page en \LaTeX~de ce rapport, grâce aux contributions des trois participantes.
 
 \section{Réponses aux questions}
 
@@ -56,21 +56,23 @@ Enfin, dans un dernier temps, BAIGNÈRES Clara s’est occupée des questions 11
 
 Notre génération de profils pour un vote par approbation repose sur la polarisation choisie en argument de notre fonction. 
 
-De manière concise, plus la polarisation est grande, plus les chances d'attribuer à la votante le bulletin $a$ s'affaiblit, et ce, jusqu'à ce que la polarisation atteigne 1. On a alors autant de chance de changer d'attribuer le bulletin $a$ que le bulletin $\bar{a}$. 
+La méthode commence par générer un vote $a$ aléatoire. Chaque votante se verra attribuer $a$ ou $\bar{a}$. Pour une polarisation de 0, toutes les votantes reçoivent $a$. Pour une polarisation de 1, chaque votante se voit attribuer $a$ ou $\bar{a}$ avec la même probabilité. On voit que dans le cas de polarisation 0, l'échantillon sera \emph{exactement} de polarisation 0. Dans le cas de polarisation 1, il sera de polarisation 1 en moyenne.
 
-On a alors bien l'idée que plus la polarisation est faible, plus les bulletins seront similaires, et plus la polarisation est grande, plus les bulletins peuvent se répartir en deux groupes égaux. 
+Pour une polarisation comprise entre 0 et 1, on biaise simplement les probabilités.
+	
+Enfin, pour apporter plus de réalisme, notre fonction accepte en paramètre un bruit (potentiellement nul) qui viendra légèrement modifier le vote attribué à chaque participante.
 
-Le bruit sert à ajouter quelques modifications aux votes. 
+On a alors bien l'idée que plus la polarisation est faible, plus les bulletins seront similaires, et plus la polarisation est grande, plus les bulletins peuvent se répartir en deux groupes. 
 
 \subsection{Question 2}
 
-Pour les votes par ordres totaux, le principe est le même. La modification par le bruit consiste à interchanger deux candidats dans le vote. 
+Pour les votes par ordres totaux, le principe est le même. La modification par le bruit consiste à permuter deux candidates dans le vote. 
  
 \subsection{Question 4}
  
 \subsubsection{Axiome 1 : régularité}
 
-Le premier axiome n'est pas respecté. Prenons le premier point à vérifier, c.-à-d. $\varphi(p) = 0$ ssi $p = p_a$.
+Le premier axiome n'est pas respecté. Prenons le premier point à vérifier, soit $\varphi(p) = 0$ ssi $p = p_a$. Nous allons montrer qu'il existe un $a$ tel que $\varphi(p_a) \neq 0$.
 
 Si on prend $a = \{0\}^m$, on a alors $n_{c_k,c_l}(p) = 0$ car il n'y a aucun vote $a$ où $a_v[k] = 1 \land a_v[l]=0$, puisque pour tous les votes, l'ensemble des bulletins est à $0$.
 
@@ -82,10 +84,10 @@ On a alors que $d_{c_k,c_l}(p) = 0$ et donc :
 = \sum_{\{c_k,c_l\} \in C^2} \frac{1}{\binom{m}{2}} 
 \]
 
-Or il y a exactement $(\binom{m}{2})$ couples distincts $({c_k,c_l})$. Donc : 
+Or il y a exactement $\binom{m}{2}$ couples distincts $({c_k,c_l})$. Donc : 
 
 \[
-\phi^2(p_a) = \binom m2 \times \frac {1}{\binom m2} = 1
+\varphi^2(p_a) = \binom m2 \times \frac {1}{\binom m2} = 1
 \]
 
 De manière générale, cette partie de l'axiome (au moins) n'est jamais vérifiée quand tous les bulletins de tous les votes sont égaux (que des 1 ou que des 0).
@@ -100,7 +102,7 @@ Soit $\pi$ une permutation de $\{1, \ldots, m\}$.
 &= \sum_{\{c_k,c_l\}} 
 \frac{n - d_{c_k,c_l}(p^\pi)}{n \binom{m}{2}} \\
 &= \sum_{\{c_k,c_l\}}
-\frac{n - d_{c_{\pi^{-1}(k), \pi^{-1}(l)}}(p)}{n \binom{m}{2}} \\
+\frac{n - d_{c_{\pi^{-1}(k)}, c_{\pi^{-1}(l)}}(p)}{n \binom{m}{2}} \\
 &= \sum_{\{c_k,c_l\}}
 \frac{n - d_{c_k,c_l}(p)}{n \binom{m}{2}} \\
 &= \varphi^2(p)
@@ -111,14 +113,14 @@ Donc le second axiome est vérifié.
 
 \subsubsection{Axiome 3 : anonymité}
 
-Le principe est le même que pour l'axiome 2. Le fait de permuter les lignes (donc les votantes) ne change pas les valeurs de $n_{c_k,c_l}$. On a donc que $n_{c_k,c_l}(p) = n_{c_k,c_l}({}^\sigma p)$, et ainsi $\varphi^2(p^\pi) = \varphi^2({}^\sigma p)$.
+Le principe est le même que pour l'axiome 2. Le fait de permuter les lignes (donc les votantes) ne change pas les valeurs de $n_{c_k,c_l}$. On a donc que $n_{c_k,c_l}(p) = n_{c_k,c_l}({}^\sigma p)$, et ainsi $\varphi^2(p) = \varphi^2({}^\sigma p)$.\\
 
 Donc le troisième axiome est vérifié.
 
 
 \subsubsection{Axiome 4 : invariance par réplication}
 
-Soit $kp$, $k$ copies de notre profil. Alors :
+On note $kp$ l'ensemble de $k$ copies de notre profil. Alors :
 \[
 n_{c_k,c_l}(kp) = k n_{c_k,c_l}(p)
 \quad \text{et} \quad
@@ -146,49 +148,47 @@ Donc l’axiome 4 est vérifié.
 
 \subsection{Question 6}
 
-Pour ne pas déterminer la représentation graphique seulement à partir d'un profil par polarisation, on boucle sur toutes les valeurs de polarisation possibles et on génère plusieurs profils pour lesquels on calcule $\phi^2$. On somme tous les résultats et on les moyenne. 
+Pour ne pas déterminer la représentation graphique seulement à partir d'un profil par polarisation, on boucle sur toutes les valeurs de polarisation possibles et on génère plusieurs profils pour lesquels on calcule $\varphi^2$. On calcule enfin la moyenne des résultats. 
 
-On remarque que, pour le vote par approbation comme pour le vote par ordre total, la fonction $\phi^2$ se rapproche fortement d'une fonction linéaire $x=y$ ce qui est logique puisque $\phi^2$ est sensé représenter notre polarisation. 
+On remarque que, pour le vote par approbation comme pour le vote par ordre total, la fonction $\varphi^2$ se rapproche fortement d'une fonction linéaire $y=x$ ce qui est logique puisque $\varphi^2$ est sensé représenter notre polarisation. 
 
-\subsection{Question 7}
-
-\paragraph{Pour la distance de Hamming}
+\subsection{Question 7 (Pour la distance de Hamming)}
 
 \subsubsection{Propriété 1 : positivité}
 
-Comme 
+Par définition 
 \[
 d_H(a_{v_k}, a_{v_l}) = \sum_{i=1}^n \mathbb{1}_{a_{v_k}[i] \neq a_{v_l}[i]},
 \]
-il apparaît que, par l’indicatrice, on a soit $1$ soit $0$ dans notre somme.  
+La somme est positive comme somme d'éléments positifs ou nuls.  
 D’où $d_H(a_{v_k},a_{v_l}) \geq 0$.
 \\
 
 Donc la première propriété est vérifiée.
 
 
-\subsubsection{Propriété 2 : séparation}
+\subsubsection{Propriété 2~: séparation}
 
-\[
-d(a_{v_k}, a_{v_l}) = 0 
-\Leftrightarrow 
-\sum_{i=1}^m \mathbb{1}_{a_{v_k}[i] \neq a_{v_l}[i]} = 0 
-\Leftrightarrow 
-\mathbb{1}_{a_{v_k}[i] \neq a_{v_l}[i]} = 0 
-\Leftrightarrow 
-a_{v_k}[i] = a_{v_l}[i],
-~~\forall i \in [\![1, \ldots, m]\!].
-\]
+\begin{align*}
+d(a_{v_k}, a_{v_l}) = 0
+&\Leftrightarrow
+\sum_{i=1}^m \mathbb{1}_{a_{v_k}[i] \neq a_{v_l}[i]} = 0 \\
+&\Leftrightarrow
+\mathbb{1}_{a_{v_k}[i] \neq a_{v_l}[i]} = 0 \quad \forall i \in [\![1, \ldots, m]\!] \\
+&\Leftrightarrow
+a_{v_k}[i] = a_{v_l}[i] \quad \forall i \in [\![1, \ldots, m]\!]
+\end{align*}
+\\
 
 Donc la seconde propriété est vérifiée.
 
 
-\subsubsection{Propriété 3 : symétrie}
+\subsubsection{Propriété 3~: symétrie}
 
 Pour tout $a_{v_k}, a_{v_l} \in \mathcal{A}$, on a :
 \[
 d_H(a_{v_k}, a_{v_l}) = d_H(a_{v_l}, a_{v_k})
-\iff
+\Leftrightarrow
 \sum_{i=1}^m \mathbb{1}_{a_{v_k}[i] \neq a_{v_l}[i]} = 
 \sum_{i=1}^m \mathbb{1}_{a_{v_l}[i] \neq a_{v_k}[i]}.
 \]
@@ -202,11 +202,6 @@ Donc la troisième propriété est vérifiée.
 
 Soient trois bulletins $a = a_{v_k}$, $b = a_{v_l}$ et $c = a_{v_z}$ dans $\mathcal{A}$.
 
-Par définition de la distance de Hamming :
-\[
-d_H(x,y) = \sum_{i=1}^m \mathbb{1}_{x[i] \neq y[i]},
-\quad \forall x,y \in \mathcal{A}.
-\]
 On a donc :
 \[
 d_H(a,c) = \sum_{i=1}^m \mathbb{1}_{a[i] \neq c[i]},
@@ -216,7 +211,7 @@ d_H(a,b) = \sum_{i=1}^m \mathbb{1}_{a[i] \neq b[i]},
 d_H(b,c) = \sum_{i=1}^m \mathbb{1}_{b[i] \neq c[i]}.
 \]
 
-Or, pour tout indice $i \in \{1,\ldots,m\}$, on a les cas suivants :
+Or, pour tout indice $i \in \{1,\ldots,m\}$, on a~:
 
 \[
 \mathbb{1}_{a[i] \neq c[i]}
@@ -227,9 +222,9 @@ Or, pour tout indice $i \in \{1,\ldots,m\}$, on a les cas suivants :
 En effet :
 
 \begin{itemize}
-  \item Si $a[i] = c[i]$, alors $\mathbb{1}_{a[i] \neq c[i]} = 0$, et le membre de droite vaut au moins $0$. L’inégalité est donc vraie.
+  \item Si $a[i] = c[i]$, alors $\mathbb{1}_{a[i] \neq c[i]} = 0$. Comme le membre de droite est positif ou nul, l'inégalité est vérifiée.
   \item Si $a[i] \neq c[i]$, alors $a[i]$, $b[i]$, $c[i]$ ne peuvent pas tous être différents simultanément (car ils valent 0 ou 1).  
-  Ainsi, $b[i]$ diffère au moins de l’un des deux, et donc au moins l’une des deux indicatrices à droite vaut 1 ; on a donc $1 \le 1+0$ ou $1 \le 0+1$, ce qui donne encore une inégalité vraie.
+  Ainsi, $b[i]$ diffère au moins de l’un des deux, et donc au moins l’une des deux indicatrices à droite vaut 1 ; comme le terme de gauche est inférieur ou égal à 1, l'inégalité est vérifiée.
 \end{itemize}
 
 
@@ -270,41 +265,33 @@ Donc la première propriété est vérifiée.
 
 \subsubsection{Propriété 2 : séparation}
 
-\[
-(\Rightarrow) \quad 
-d(a,b) = 0 \Rightarrow |r_a(i) - r_b(i)| = 0 
-\Leftrightarrow r_a(i) = r_b(i),~\forall i.
-\]
+On a~:
+\begin{align*}
+d_S(a,b) = 0 
+&\Leftrightarrow 
+\sum_{i = 1}^m |r_a(i) - r_b(i)| = 0\\
+&\Leftrightarrow 
+|r_a(i) - r_b(i)| = 0 \quad \forall i \in [\![1, \ldots, m]\!]\\
+&\Leftrightarrow 
+r_a(i) = r_b(i) \quad \forall i \in [\![1, \ldots, m]\!]
+\end{align*}
 
-\[
-(\Leftarrow) \quad 
-r_a(i) = r_b(i) \Rightarrow |r_a(i) - r_b(i)| = 0.
-\]
-
-D’où $d(a,b) = 0$.
-\\
 
 Donc la seconde propriété est vérifiée.
 
 
 \subsubsection{Propriété 3 : symétrie}
 
-Pour tout $a,b \in \mathcal{L}$ :
-\[
-d(a,b) = |r_a(i) - r_b(i)|, \qquad
-d(b,a) = |r_b(i) - r_a(i)|.
-\]
-
-Ainsi :
-\[
-d(a,b) = d(b,a) \Leftrightarrow 
-|r_a(i) - r_b(i)| = |r_b(i) - r_a(i)|,
-\]
-ce qui est vrai par la propriété de la valeur absolue.
-\\
-
-Exemple : si pour le vote $a \in p$, $c_i$ est en position 3, et que pour $b$ elle est en position 2, alors la distance est de 1 $(d(a,b))$. Pour $d(b,a)$ on obtient :  $|r_b(i) - r_a(i)| = |2-3| = |-1| = 1 = d(a,b)$
-\\
+Pour tout $a,b \in \mathcal{L}$~:
+\begin{align*}
+d_S(a,b) 
+&= 
+\sum_{i = 1}^m |r_a(i) - r_b(i)|\\
+&= 
+\sum_{i = 1}^m |r_b(i) - r_a(i)|\\
+&= 
+d_S(b,a) 
+\end{align*}
 
 Donc la troisième propriété est vérifiée.
 
@@ -315,7 +302,7 @@ Donc la troisième propriété est vérifiée.
 d_S(a,b) 
 &= \sum_{i=1}^m |r_a(i) - r_b(i)| \\
 &= \sum_{i=1}^m |r_a(i) - r_c(i) + r_c(i) - r_b(i)| \\
-&\leq \sum_{i=1}^m \big(|r_a(i) - r_c(i)| + |r_c(i) - r_b(i)|\big) \text{ par l'inégalité triangulaire de la valeur obsolue}\\
+&\leq \sum_{i=1}^m \left(|r_a(i) - r_c(i)| + |r_c(i) - r_b(i)|\right) \text{ par l'inégalité triangulaire de la valeur obsolue}\\
 &= \sum_{i=1}^m |r_a(i) - r_c(i)| + \sum_{i=1}^m |r_c(i) - r_b(i)| \text{ par linéarité de la somme} \\
 &= d_S(a,c) + d_S(c,b)
 \end{align*}
@@ -334,19 +321,16 @@ Donc la quatrième proposition est vérifiée.
 
 \subsubsection{Axiome 1 : régularité}
 
-On souhaite montrer que 
-\[
-\varphi_{d_H}(p) \in [0,1]
-\quad \text{et que} \quad
-\varphi_{d_H}(p) = 0 \text{ ssi } p = p_a
-\quad \text{et} \quad
-\varphi_{d_H}(p) = 1 \text{ ssi } p = p_{a, \bar{a}}.
-\]
+%On souhaite montrer que 
+%\[
+%\varphi_{d_H}(p) \in [0,1]
+%\quad \text{et que} \quad
+%\varphi_{d_H}(p) = 0 \text{ ssi } p = p_a
+%\quad \text{et} \quad
+%\varphi_{d_H}(p) = 1 \text{ ssi } p = p_{a, \bar{a}}.
+%\]
 
-
-\begin{itemize}
-  \item $\varphi_{d_H}(p) = 0$ ssi $p = p_a$
-\end{itemize}
+\textbf{On montre que $\varphi_{d_H}(p) = 0$ ssi $p = p_a$.}
 
 \paragraph{($\Leftarrow$)}  
 Si $p = p_a$, alors toutes les votantes ont le même bulletin et approuvent la même personne.  
@@ -409,40 +393,38 @@ Ainsi, on a bien :
 \]
 \\	
 
-\begin{itemize}
-  \item $\varphi_{d_H}(p) = 1$ ssi $p = p_{a, \bar{a}}$
-\end{itemize}
+\textbf{On montre que $\varphi_{d_H}(p) = 1$ ssi $p = p_{a, \bar{a}}$}
 
 \paragraph{($\Leftarrow$)}  
-Soit 
+Pour tout $\tilde{a} \in \mathcal{A}$ on a~: 
 \[
-\mathcal{D} = \sum_{a \in p_{a,\bar{a}}} d_H(a,\tilde{a}) 
+\sum_{a \in p_{a,\bar{a}}} d_H(a,\tilde{a}) 
 = \frac{n}{2} d_H(a,\tilde{a}) + \frac{n}{2} d_H(\bar{a}, \tilde{a}).
 \]
 
-Si on choisit $\tilde{a} = a$, alors :
-\[
-\mathcal{D} = \frac{n}{2} d_H(\bar{a}, a) 
-= \frac{n m}{2} 
-\quad \Rightarrow \quad 
-\text{distance } \leq \frac{n m}{2}.
-\]
+%Si on choisit $\tilde{a} = a$, alors :
+%\[
+%\sum_{a \in p_{a,\bar{a}}} d_H(a,\tilde{a}) = \frac{n}{2} d_H(\bar{a}, a) 
+%= \frac{n m}{2} 
+%\quad \Rightarrow \quad 
+%\text{distance } \leq \frac{n m}{2}.
+%\]
 
 Ainsi :
-\[
-u_1^*(p_{a,\bar{a}}) 
-= \min_{\tilde{a} \in \mathcal{A}} 
-\sum_{a' \in p_{a,\bar{a}}} d_H(a', \tilde{a})
-= \min_{\tilde{a} \in \mathcal{A}} 
-\frac{n}{2} d_H(a, \tilde{a}) + \frac{n}{2} d_H(\bar{a}, \tilde{a})
-= \frac{n}{2} \big( \min_{\tilde{a} \in \mathcal{A}} d_H(a, \tilde{a}) + d_H(\bar{a}, \tilde{a}) \big).
-\]
 
-Or :
-\[
-d_H(a, \tilde{a}) + d_H(\bar{a}, \tilde{a}) = m.
-\]
-En effet, si $\tilde{a}$ diffère de $a$ sur $k$ positions, alors $\tilde{a}$ diffère de $\bar{a}$ sur $m - k$ positions, donc :
+\begin{align*}
+u_1^*(p_{a,\bar{a}}) 
+&=
+\min_{\tilde{a} \in \mathcal{A}} 
+\sum_{a' \in p_{a,\bar{a}}} d_H(a', \tilde{a})\\
+&=
+\min_{\tilde{a} \in \mathcal{A}} 
+\left(\frac{n}{2} d_H(a, \tilde{a}) + \frac{n}{2} d_H(\bar{a}, \tilde{a})\right)\\
+&=
+\frac{n}{2} \min_{\tilde{a} \in \mathcal{A}} \left( d_H(a, \tilde{a}) + d_H(\bar{a}, \tilde{a}) \right)
+\end{align*}
+
+Or, si $\tilde{a}$ diffère de $a$ sur $k$ positions, alors $\tilde{a}$ diffère de $\bar{a}$ sur $m - k$ positions. Donc~:
 \[
 d_H(a, \tilde{a}) + d_H(\bar{a}, \tilde{a}) = k + (m - k) = m.
 \]
@@ -450,121 +432,159 @@ d_H(a, \tilde{a}) + d_H(\bar{a}, \tilde{a}) = k + (m - k) = m.
 Ainsi :
 \[
 u_1^*(p_{a,\bar{a}}) = \frac{n}{2} \times m = \frac{n m}{2},
-\quad \Rightarrow \quad
-\varphi(p_{a,\bar{a}}) = 1.
 \]
 
-\paragraph{($\Rightarrow$)}  
+Le calcul de $u_2^*(p_{a,\bar{a}})$ est plus simple~: en choisissant $a_1 = a$ et $a_2 = \bar{a}$, on trouve immédiatement les valeurs qui minimisent la somme et 
+\[
+u_2^*(p_{a,\bar{a}}) = 0.
+\]
+
+Ainsi~:
+
+\[
+\varphi(p_{a,\bar{a}}) 
+= 
+\frac{2}{nm} \left(u_1^*(p_{a,\bar{a}}) - u_2^*(p_{a,\bar{a}}) \right) 
+= 
+\frac{2}{nm} \left(\frac{nm}{2} - 0 \right) 
+=
+1.
+\]
+
+\paragraph{($\Rightarrow$)}
+
+On a~:
+
 \[
 \varphi(p) = 1 
-\Leftrightarrow \frac{2}{n m}(u_1^*(p) - u_2^*(p)) = 1 
-\Leftrightarrow u_1^*(p) - u_2^*(p) = \frac{n m}{2}.
+\Rightarrow \frac{2}{n m}(u_1^*(p) - u_2^*(p)) = 1 
+\Rightarrow u_1^*(p) - u_2^*(p) = \frac{n m}{2}.
 \]
 
-Or on sait que $u_1^*(p) \leq n m$, puisque 
+On peut montrer que $u_1^*(p)$ est toujours bornée supérieurement par $\frac{nm}{2}$~: 
+Si $a$ est un vote \emph{aléatoire}, où chaque bulletin vaut 1 avec probabilité $\frac12$, alors, en moyenne:
+
+\begin{align*}
+\text{E}_a \left( \sum_{a' \in p} d_H(a,a') \right)
+&=
+\sum_{a' \in p} \text{E}_a \left( d_H(a,a') \right) \quad \text{(linéarité de l'espérance)}\\
+&=
+\sum_{a' \in p} \frac{m}{2} \quad \text{(en moyenne, un vote aléatoire est à distance $m/2$ d'un vote)}\\
+&=
+\frac{nm}{2}
+\end{align*}
+Puisque la moyenne sur $a$ vaut $\frac{nm}{2}$, il existe au moins un bulletin pour lequel la somme est inférieure ou égale à $\frac{nm}{2}$. Par conséquent, on a toujours~:
 \[
-\min \sum d_H(a, a') \leq m.
+u_1^*(p) \le \frac{nm}{2}
 \]
 
-On a donc $u_1^*(p) - u_2^*(p) = \frac{n m}{2}$, et puisque $u_1^*(p) \leq \frac{n m}{2}$, on en déduit que $u_2^*(p) = 0$.
-
-Or :
+On déduit de $u_1^*(p) - u_2^*(p) = \frac{n m}{2}$ et de $u_1^*(p) \le \frac{nm}{2}$ que $u_2^*(p) \le 0$, et donc que 
 \[
+u_2^*(p) = 0
+\]
+
+puisque $u_2^*(p)$ est positif.
+
+Or~:
+\begin{align*}
 u_2^*(p) = 0 
-\Leftrightarrow 
-\sum \min \{d_H(a_1,a'), d_H(a_2,a')\} = 0
-\Leftrightarrow 
+&\Leftrightarrow 
+\sum \min \{d_H(a_1,a'), d_H(a_2,a')\} = 0\\
+&\Leftrightarrow 
 d_H(a_1,a') = 0 \text{ ou } d_H(a_2,a') = 0.
-\]
-Donc, pour tout $a' \in p$, on a $a' = a_1$ ou $a' = a_2$, il n’y a donc que deux types de bulletins.
+\end{align*}
 
-De plus, puisque $u_1^*(p) \leq \frac{n m}{2}$, le consensus apparaît à distance moyenne $\frac{n m}{2}$, ce qui n’est possible que si $a_2 = \bar{a_1}$.
+Donc, pour tout $a' \in p$, on a $a' = a_1$ ou $a' = a_2$, il n’y a donc que deux types de bulletins. De plus 
 
-Ainsi, puisque l’on ne peut avoir que $a_1$ ou $a_2$ comme vote, et que $a_2 = \bar{a_1}$, on a bien :
 \[
-\varphi_{d_H}(p) = 1 \Rightarrow p = p_{a, \bar{a}}.
+u_1^*(p) = \frac{n m}{2}.
 \]
 
-Enfin, la valeur maximale $\frac{nm}{2}$ minimise notre distance entre $a$ et $\bar{a}$, et donc :
+La méthode de raisonnement basée sur la moyenne effectuée plus haut, combinée au fait que $u_1^*(p) = \min_{\tilde{a}} \sum_{a \in p} d_H(\tilde{a},a) = \frac{n m}{2}$ permet de déduire que 
 \[
-\varphi_{d_H}(p) = 1,
-\quad \text{et} \quad
-0 \leq \varphi_{d_H}(p) \leq 1
+\sum_{a \in p} d_H(\tilde{a},a) = \frac{n m}{2}
+\quad
+\text{pour tout $\tilde{a} \in A$}
 \]
-puisque $d_H$ est une fonction de distance positive.
-\\
+puisque si la valeur minimale est égale à la moyenne, toutes les valeurs sont égales à la moyenne.
+
+Notons $k$ le nombre de bulletins $a_1$. On a $n-k$ bulletins $a_2$. On a
+
+\[
+\sum_{a \in p} d_H(a_1,a) = (n-k) d_H(a_1,a_2)
+\quad\text{et}\quad
+\sum_{a \in p} d_H(a_2,a) = k d_H(a_1,a_2)
+\]
+
+Les deux sommes valant, par ailleurs $\frac{nm}{2}$, on peut sommer les deux équations ci-dessus pour obtenir:
+
+\[
+d_H(a_1, a_2) = m
+\]
+
+Ce qui permet (enfin~!) de conclure que $a_2 = \bar{a_1}$, autrement dit, que $p = p_{a, \bar{a}}$.\\
+
+Enfin, $\varphi_{d_H}(p) \in [0,1]$:
+\begin{itemize}
+	\item La positivité découle du fait que $u_1^*(p) \ge u_2^*(p)$, et
+	\item comme on a vu qu'on a toujours $u_1^*(p) \le \frac{nm}{2}$, alors
+\end{itemize}
+
+\[
+\varphi_{d_H}(p) 
+\le
+\frac{2}{nm}\left(\frac{nm}{2}-u_2^*(p)\right)
+=
+1-\frac{2}{nm}u_2^*(p)
+\le
+1
+\]
+
 
 Donc le premier axiome est vérifié.
 
 \subsubsection{Axiome 2 : neutralité}
 
-Pour que $phi_{d_H}(p) = \phi_{d_H}(p^\pi)$ il faut que $u_1^*(p) = u_1^*(p^\pi)$ et $u_2^*(p) = u_2^*(p^\pi)$. Montrons alors c'est deux égalités.
+Pour que $\varphi_{d_H}(p) = \varphi_{d_H}(p^\pi)$ il suffit que $u_1^*(p) = u_1^*(p^\pi)$ et $u_2^*(p) = u_2^*(p^\pi)$. Montrons ces deux égalités.
 \\
 
 \begin{itemize}
   \item $u_1^*(p) = u_1^*(p^\pi)$
 \end{itemize}
 
-On sait que :
-\[
-u_1^*(p) = \min \sum_{a' \in p} d_H(a, a')
-\quad \text{et} \quad
-u_1^*(p^\pi) = \min \sum_{a' \in p^\pi} d_H(a^\pi, a').
-\]
-
-Or :
-\[
-d_H(a, a') = d_H(a^\pi, a'),
-\]
-donc :
-\[
-\sum_{a' \in p} d_H(a, a') 
-= \sum_{a' \in p^\pi} d_H(a^\pi, a').
-\]
-Ainsi :
-\[
-\min \sum_{a' \in p} d_H(a, a') 
-= \min \sum_{a' \in p^\pi} d_H(a^\pi, a'),
-\]
-ce qui implique :
-\[
-u_1^*(p) = u_1^*(p^\pi).
-\]
-
+On a~:
+\begin{align*}
+u_1^*(p) 
+&=
+\min_a \sum_{a' \in p} d_H(a, a')\\
+&=
+\min_a \sum_{a' \in p} d_H(a^{\pi}, a'^{\pi})\\
+&=
+\min_a \sum_{a' \in p^{\pi}} d_H(a^{\pi}, a')\\
+&=
+\min_a \sum_{a' \in p^{\pi}} d_H(a, a')\\
+&=
+u_1^*(p^{\pi}) 
+\end{align*}
 
 \begin{itemize}
   \item $u_2^*(p) = u_2^*(p^\pi)$
 \end{itemize}
 
-On sait que :
-\[
-u_2^*(p) = \sum_{a' \in p} \min \{ d_H(a_1, a'), d_H(a_2, a') \}
-\quad \text{et} \quad
-u_2^*(p^\pi) = \sum_{a' \in p^\pi} \min \{ d_H(a_1^\pi, a'), d_H(a_2^\pi, a') \}.
-\]
-
-Or :
-\[
-d_H(a_1, a') = d_H(a_1^\pi, a')
-\quad \text{et} \quad
-d_H(a_2, a') = d_H(a_2^\pi, a'),
-\]
-donc :
-\[
-\min \{ d_H(a_1,a'), d_H(a_2,a') \} 
-= \min \{ d_H(a_1^\pi,a'), d_H(a_2^\pi, a') \}.
-\]
-
-Ainsi :
-\[
-\sum_{a' \in p} \min \{ d_H(a_1,a'), d_H(a_2,a') \} 
-= \sum_{a' \in p^\pi} \min \{ d_H(a_1^\pi,a'), d_H(a_2^\pi,a') \}
-\]
-et donc :
-\[
-u_2^*(p) = u_2^*(p^\pi).
-\]
-
+On a~:
+\begin{align*}
+u_2^*(p)
+&=
+\min_{a_1,a_2}\sum_{a' \in p} \min \{ d_H(a_1, a'), d_H(a_2, a') \}\\
+&=
+\min_{a_1,a_2}\sum_{a' \in p} \min \{ d_H(a_1^{\pi}, a'^{\pi}), d_H(a_2^{\pi}, a'^{\pi}) \}\\
+&=
+\min_{a_1,a_2}\sum_{a' \in p^{\pi}} \min \{ d_H(a_1^{\pi}, a'), d_H(a_2^{\pi}, a') \}\\
+&=
+\min_{a_1,a_2}\sum_{a' \in p^{\pi}} \min \{ d_H(a_1, a'), d_H(a_2, a') \}\\
+&=
+u_2^*(p^{\pi})
+\end{align*}
 
 Comme on a montré que $u_1^*(p) = u_1^*(p^\pi)$ et $u_2^*(p) = u_2^*(p^\pi)$, on obtient :
 \[
@@ -647,7 +667,7 @@ Ainsi :
 \]
 \\
 
-Note : On a bien $(kn)m$ au dénominateur de notre première égalité car on a on a $kn$ votes, grâce à la $k$-répétition de notre profil à $n$ votes.
+Note : On a bien $(kn)m$ au dénominateur de notre première égalité car on a $kn$ votes, grâce à la $k$-répétition de notre profil à $n$ votes.
 \\
 
 Donc le quatrième axiome est vérifié.
@@ -655,15 +675,17 @@ Donc le quatrième axiome est vérifié.
 
 \subsection{Question 10}
 
+Pour tout $a \in \mathcal{A}$~:
+
 \[
 \sum_{a' \in p} d_H(a,a') 
-= \sum_{a' \in p} \sum_{i=1}^m (a_i \oplus a'_i)
-= \sum_{i=1}^m \sum_{a' \in p} (a_i \oplus a'_i).
+= \sum_{a' \in p} \sum_{i=1}^m (a[i] \oplus a'[i])
+= \sum_{i=1}^m \sum_{a' \in p} (a[i] \oplus a'[i]).
 \]
 
-Le $a_i$ qui minimise cette somme est soit $0$, soit $1$, selon lequel des deux est le plus fréquent dans 
+Le $a_i$ qui minimise $\sum_{a' \in p} (a[i] \oplus a'[i])$ est soit $0$, soit $1$, selon lequel des deux est le plus fréquent dans 
 \[
-(a'_{1i}, a'_{2i}, \ldots, a'_{ni}).
+(a'_{1}[i], a'_{2}[i], \ldots, a'_{n}[i]).
 \]
 On obtient donc $a$ en appliquant cette procédure pour chaque coordonnée.
 \\
@@ -683,7 +705,7 @@ d_S(\succ, \succ_{v_k})
 = \sum_{c_j \in C} |r_\succ(c_j) - r_{\succ_{v_k}}(c_j)|.
 \]
 
-Donc, si on cherche à minimiser cette distance pour tous les profils, on obtient :
+On cherche à minimiser la somme de ces distances sur tous les profils~:
 \[
 \sum_{v \in p} \sum_{c_j \in C} 
 |r_\succ(c_j) - r_{\succ_{v_k}}(c_j)|
@@ -697,10 +719,12 @@ Pour chaque candidate, on cherche un rang unique tel que la somme totale des éc
 En utilisant le principe du graphe biparti (c’est-à-dire qu’on peut découper le graphe en deux ensembles de sommets tels que deux sommets d’un même ensemble ne sont jamais adjacents),  
 on pose :
 
-- le premier ensemble de sommets :  
+\begin{itemize}
+	\item le premier ensemble de sommets :  
   \( U \) = les \( m \) candidates ;
-- le second ensemble de sommets :  
+  \item le second ensemble de sommets :  
   \( V \) = les \( m \) positions possibles.
+\end{itemize}
 
 On commence par dire que chaque candidate est connectée à toutes les positions possibles.  
 On associe un poids à chaque arête correspondant au coût total si la candidate en question est placée au rang \( k \) :
@@ -709,8 +733,7 @@ On associe un poids à chaque arête correspondant au coût total si la candidat
 w_{j,k} = \sum_{v \in p} |\, k - r_{\succ_v}(c_j)|.
 \]
 
-On a donc \( m^2 \) calculs à effectuer.  
-Ensuite, il suffit de trouver la combinaison qui minimise la somme finale.  
+Il suffit de trouver la combinaison qui minimise la somme finale.  
 Cette combinaison doit forcer notre graphe à être en couplage parfait  
 (c’est-à-dire qu’aucune candidate n’est associée à deux positions différentes et qu’aucune position n’est associée à deux candidates différentes).  
 On retrouve ainsi la bijection recherchée.
@@ -719,11 +742,11 @@ Cette recherche de combinaison se fait à l’aide du module \texttt{scipy} sous
 (voir la question 12 pour l’implémentation).
 
 \subsection{Question 15}
-Pour étudier empiriquement le comportement des mesure de polarisation $\phi_{d_H}$ et $\phi_{d_S}$, il faut simuler en faisant varier le paramètre de polarisation p du modèle de génération des profils.
+Pour étudier empiriquement le comportement des mesure de polarisation $\varphi_{d_H}$ et $\varphi_{d_S}$, il faut simuler en faisant varier le paramètre de polarisation $p$ du modèle de génération des profils.
 
-Les résultats sont représentés graphiquement en fonction de p et on observe que la polarisation est minimale lorsque p = 0 et maximale autour de p = 1, ce qui correspond à une situation où la population est divisée en deux groupes de taille comparable adoptant des préférences opposées. 
+Les résultats sont représentés graphiquement en fonction de $p$ et on observe que la polarisation est minimale lorsque $p = 0$ et maximale autour de $p = 1$, ce qui correspond à une situation où la population est divisée en deux groupes de taille comparable adoptant des préférences opposées. 
 
-Ces résultats sont ceux attendus car ils montrent bien que $\phi_{d_H}$ (respectivement $\phi_{d_S}$) est bien une mesure de polarisation pour le cas des votes par approbation (respectivement, votes par ordres totaux).
+Ces résultats sont ceux attendus car ils montrent que $\varphi_{d_H}$ (respectivement $\varphi_{d_S}$) est bien une mesure de polarisation pour le cas des votes par approbation (respectivement, votes par ordres totaux).
 
 
 \section{Utilisation des IAs}
@@ -752,10 +775,10 @@ Ces résultats sont ceux attendus car ils montrent bien que $\phi_{d_H}$ (respec
 
 \subsection{BOUCHERON Lucie}
 
-\textbf{Prompt 1 :} Voici la définition de $\phi^2$ : $\phi^2(p) = \sum_{\{c_k,c_l\} \in C^2} \frac{n - d_{c_k,c_l}(p)}{n \binom{m}{2}}$. Je cherche à simplifier son implémentation. 
+\textbf{Prompt 1 :} Voici la définition de $\varphi^2$ : $\varphi^2(p) = \sum_{\{c_k,c_l\} \in C^2} \frac{n - d_{c_k,c_l}(p)}{n \binom{m}{2}}$. Je cherche à simplifier son implémentation. 
 Est-ce qu’il existe une écriture plus compacte, plus computationnelle qui permettrait une implémentation plus simple en Python ?
 
-\textbf{Réponse :}  L’IA propose de réécrire la formule de $\phi^2$ d'une certaine façon, en expliquant que cela permet de sommer directement les valeurs d’une matrice contenant les différences absolues, ce qui permet d’utiliser une seule somme au lieu d’une double boucle sur les paires dans l’implémentation.
+\textbf{Réponse :}  L’IA propose de réécrire la formule de $\varphi^2$ d'une certaine façon, en expliquant que cela permet de sommer directement les valeurs d’une matrice contenant les différences absolues, ce qui permet d’utiliser une seule somme au lieu d’une double boucle sur les paires dans l’implémentation.
 
 \textbf{Critique :} Cette réponse nous a été utile pour simplifier l’écriture du code mais l’IA ne justifie pas en détail le passage d’une forme à l’autre, donc il a fallu vérifier par nous même l’équivalence.
 \\
@@ -780,6 +803,13 @@ Est-ce qu’il existe une écriture plus compacte, plus computationnelle qui per
 \textbf{Réponse} : pour chaque blocs que je lui ai envoyé, il m'a rendu, mot à mot, le même texte \LaTeX, mais avec une mise en page aérée, bien plus agréable. 
 
 \textbf{Critique :} cela m'a été grandement utile, j'ai économisé beaucoup de temps simplement pour la mise en page.
+\\
+
+\textbf{Prompt 2 :} prouve moi l'axiome 1 de l'exercice 9 dans le cas où phi(p) = 1 
+
+\textbf{Réponse :} il me propose une preuve telle qu'un de mes centroïdes est forcément un vote de mon profil, et non pas un consensus. 
+
+\textbf{Critique :} je ne comprenais pas la preuve de départ de Féryel donc j'ai demandé à Mistral une autre version. Sa réponse ne m'a été que partiellement utile car comme dit juste au dessus, l'IA ne comprenait pas le principe de consensus, et m'attribuait $u_1^*$ à un vote de mon profil. Cependant, il m'a donné l'idée de la preuve pour $u_1^* \leq \frac{nm}{2}$, ce qui m'a permis de compléter la réponse de Féryel.  
 
 \section{Sources}
 
